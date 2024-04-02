@@ -1,0 +1,10 @@
+__pychache__/
+trackers/__pycache__
+court_line_detector/__pycache__
+utils/__pycache__
+training/tennis-ball-detection-6/tennis-ball-detection-6/test
+training/tennis-ball-detection-6/tennis-ball-detection-6/train
+training/tennis-ball-detection-6/tennis-ball-detection-6/valid
+yolov8x.pt
+yolov5l6u.pt
+models/
