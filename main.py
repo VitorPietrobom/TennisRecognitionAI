@@ -12,13 +12,15 @@ def main():
 
     ball_tracker = BallTracker(model_name="models/yolov5_last.pt")
     ball_detections = ball_tracker.detect_frames(frames, read_from_stub=True, stub_path="tracker_stubs/ball_detections.pkl")
+    ball_detections = ball_tracker.interpolate_ball_positions(ball_detections)
 
     court_line_detector = CourtLineDetector(model_path="models/keypoints_model.pth")
-    court_line_detections = court_line_detector.detect_frames(frames)
+    court_line_detections = court_line_detector.predict(frames[0])
 
-    frames = court_line_detector.draw_boxes(frames, court_line_detections)
+
     frames = ball_tracker.draw_boxes(frames, ball_detections)
     frames = player_tracker.draw_boxes(frames, player_detections)
+    frames = court_line_detector.draw_keypoints_on_video(frames, court_line_detections)
 
     save_video(frames, output_video_path, 24)
     
