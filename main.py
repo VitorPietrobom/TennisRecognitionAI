@@ -18,6 +18,8 @@ def main():
     court_line_detector = CourtLineDetector(model_path="models/keypoints_model.pth")
     court_line_detections = court_line_detector.predict(frames[0])
 
+    player_detections = player_tracker.choose_and_filter_players(court_line_detections, player_detections)
+
 
     frames = ball_tracker.draw_boxes(frames, ball_detections)
     frames = player_tracker.draw_boxes(frames, player_detections)
