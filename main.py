@@ -1,6 +1,7 @@
 from utils import read_video, save_video
 from trackers import PlayerTracker, BallTracker
 from court_line_detector import CourtLineDetector
+from mini_court import MiniCourt
 import cv2
 
 def main():
@@ -28,6 +29,9 @@ def main():
     ## Drawing frame number in the top left corner
     for i, frame in enumerate(frames):
         cv2.putText(frame, f"Frame: {i}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+
+    mini_court = MiniCourt(frames[0])
+    frames = mini_court.draw_mini_court(frames)
 
     save_video(frames, output_video_path, 24)
     
