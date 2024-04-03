@@ -55,7 +55,7 @@ class BallTracker:
             for track_id, box in player_dict.items():
                 x1, y1, x2, y2 = box
                 cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), (0, 0, 255), 2)
-                cv2.putText(frame, f"Ball {track_id}", (int(box[0]), int(box[1]-10)), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+                cv2.putText(frame, f"Ball", (int(box[0]), int(box[1]-10)), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
             output_frames.append(frame)
 
         return output_frames
