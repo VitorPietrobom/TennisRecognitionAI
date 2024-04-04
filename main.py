@@ -15,7 +15,7 @@ def main():
     ball_tracker = BallTracker(model_name="models/yolov5_best.pt")
     ball_detections = ball_tracker.detect_frames(frames, read_from_stub=True, stub_path="tracker_stubs/ball_detections.pkl")
     ball_detections = ball_tracker.interpolate_ball_positions(ball_detections)
-    ball_hit_frames = ball_tracker.get_ball_hits(ball_detections)
+    ball_hit_frames = ball_tracker.get_ball_hit_frames(ball_detections)
 
     court_line_detector = CourtLineDetector(model_path="models/keypoints_model.pth")
     court_line_detections = court_line_detector.predict(frames[0])
@@ -32,7 +32,14 @@ def main():
         cv2.putText(frame, f"Frame: {i}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
 
     mini_court = MiniCourt(frames[0])
+
+    player_mini_court_detections, ball_mini_court_detections = mini_court.convert_bbox_to_mini_court_coords(player_detections, 
+                                                                                                          ball_detections,
+                                                                                                          court_line_detections)
     frames = mini_court.draw_mini_court(frames)
+
+    frames = mini_court.draw_points_on_mini_court(frames, player_mini_court_detections)
+    frames = mini_court.draw_points_on_mini_court(frames, ball_mini_court_detections)
 
     save_video(frames, output_video_path, 24)
     
