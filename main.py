@@ -12,9 +12,10 @@ def main():
     player_tracker = PlayerTracker(model_name="yolov8x")
     player_detections = player_tracker.detect_frames(frames, read_from_stub=True, stub_path="tracker_stubs/player_detections.pkl")
 
-    ball_tracker = BallTracker(model_name="models/yolov5_last.pt")
+    ball_tracker = BallTracker(model_name="models/yolov5_best.pt")
     ball_detections = ball_tracker.detect_frames(frames, read_from_stub=True, stub_path="tracker_stubs/ball_detections.pkl")
     ball_detections = ball_tracker.interpolate_ball_positions(ball_detections)
+    ball_hit_frames = ball_tracker.get_ball_hits(ball_detections)
 
     court_line_detector = CourtLineDetector(model_path="models/keypoints_model.pth")
     court_line_detections = court_line_detector.predict(frames[0])
